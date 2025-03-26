@@ -1,0 +1,33 @@
+{% set name = "project_name" %}
+{% set version = "0.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  path: ..
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+  noarch: python
+
+requirements:
+  host:
+    - python >=3.8
+    - pip
+  run:
+    - python >=3.8
+    # Add any specific dependencies here
+
+test:
+  imports:
+    - project_name
+  requires:
+    - pytest
+
+about:
+  home: https://github.com/yourusername/project_name
+  license: MIT
+  license_file: LICENSE

@@ -1,0 +1,6 @@
+name: python-packaging
+channels:
+  - conda-forge
+dependencies:
+  - setuptools
+  - wheel
