@@ -35,6 +35,10 @@ markers = [
   "integration: marks integration tests",
 ]
 filterwarnings = ["error", "ignore::DeprecationWarning"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+norecursedirs = [".git", ".tox", "venv", "dist", "build"]
 
 # Black Code Formatter Configuration
 [tool.black]
