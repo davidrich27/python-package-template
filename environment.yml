@@ -5,5 +5,4 @@ dependencies:
   - setuptools
   - wheel
 
-  - python3
   - pytest
