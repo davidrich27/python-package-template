@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.'8, '3.9', '3.10', '3.11']
+        python-version: ['3.8', '3.9', '3.10', '3.11']
 
     steps:
       - name: Check out code
@@ -20,10 +20,10 @@ jobs:
         with:
           submodules: true
 
-      # - name: Prepare build environment
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install build-essential zlib1g-dev python3-pip python3-pytest git git-lfs
+      - name: Prepare build environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install build-essential git git-lfs
 
       - name: Install conda
         run: |
@@ -41,7 +41,20 @@ jobs:
           conda activate larch-dev
           conda install -c conda-forge conda-build anaconda-client
 
-      - name: Build conda package
+      - name: Build package
+        env:
+          ANACONDA_USER: ${{ vars.ANACONDA_USER }}
+          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+          ANACONDA_FLAGS: ${{ vars.ANACONDA_FLAGS }}
+          UPLOAD_TO_ANACONDA_CLOUD: ${{ vars.UPLOAD_TO_ANACONDA_CLOUD }}
         run: |
           source ~/miniconda/etc/profile.d/conda.sh
           conda activate larch-dev
+          export LARCH_VERSION=$(cat ./VERSION)
+          export LARCH_INCLUDE_TEST=${LARCH_INCLUDE_TEST}
+          export LARCH_RUN_TEST=${LARCH_RUN_TEST}
+          if [[ ${UPLOAD_TO_ANACONDA_CLOUD} == true ]]; then
+            conda build . --user ${ANACONDA_USER} --token ${ANACONDA_TOKEN} ${ANACONDA_FLAGS}
+          else
+            conda build .
+          fi
