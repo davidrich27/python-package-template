@@ -1,4 +1,4 @@
-name: python-packaging
+name: package_name
 channels:
   - conda-forge
 dependencies:

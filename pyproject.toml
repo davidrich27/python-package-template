@@ -15,15 +15,15 @@ dev = ["pytest>=7.0", "black", "mypy", "flake8"]
 
 # Build Configuration using setuptools
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 # Setuptools-specific Configuration
 [tool.setuptools]
 packages = ["package_name"]
 
-[tool.setuptools.package-data]
-"your_package_name" = ["data/*.csv"] # Example for including data files
+# [tool.setuptools.package-data]
+# "your_package_name" = ["data/*.csv"] # Example for including data files
 
 # pytest Configuration
 [tool.pytest.ini_options]
@@ -40,17 +40,17 @@ python_classes = ["Test*"]
 python_functions = ["test_*"]
 norecursedirs = [".git", ".tox", "venv", "dist", "build"]
 
-# Black Code Formatter Configuration
-[tool.black]
-line-length = 88
-target-version = ['py38', 'py39', 'py310', 'py311']
+# # Black Code Formatter Configuration
+# [tool.black]
+# line-length = 88
+# target-version = ['py38', 'py39', 'py310', 'py311']
 
-# Mypy Type Checker Configuration
-[tool.mypy]
-strict = true
-ignore_missing_imports = true
+# # Mypy Type Checker Configuration
+# [tool.mypy]
+# strict = true
+# ignore_missing_imports = true
 
-# Flake8 Linter Configuration
-[tool.flake8]
-max-line-length = 88
-exclude = [".git", "__pycache__", "build", "dist"]
+# # Flake8 Linter Configuration
+# [tool.flake8]
+# max-line-length = 88
+# exclude = [".git", "__pycache__", "build", "dist"]

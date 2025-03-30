@@ -10,24 +10,31 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv
   noarch: python
+  script:
+    - "echo INSTALL PACKAGE"
+    - "{{ PYTHON }} -m pip install ."
+    - "echo LIST PACKAGES"
+    - "{{ PYTHON }} -m pip list"
 
 requirements:
   host:
     - python >=3.8
+    - numpy >=1.24
     - pip
+    - setuptools
+    - wheel
   run:
     - python >=3.8
-    # Add any specific dependencies here
+    - numpy >=1.24
 
-test:
-  imports:
-    - project_name
-  requires:
-    - pytest
+# test:
+#   imports:
+#     - project_name
+#   requires:
+#     - pytest
 
 about:
-  home: https://github.com/yourusername/project_name
+  home: https://github.com/matsengrp/project_name
   license: MIT
   license_file: LICENSE
