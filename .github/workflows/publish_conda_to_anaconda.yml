@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.10', '3.11']
+        python-version: ['3.11']
 
     steps:
       - name: Check out code
@@ -41,8 +41,17 @@ jobs:
           conda activate package_name
           conda install -c conda-forge conda-build anaconda-client
 
-      - name: Build package
+      - name: Build package (and Upload to Anaconda Cloud)
+        env:
+          ANACONDA_USER: ${{ vars.ANACONDA_USER }}
+          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+          ANACONDA_FLAGS: ${{ vars.ANACONDA_FLAGS }}
+          UPLOAD_TO_ANACONDA_CLOUD: ${{ vars.UPLOAD_TO_ANACONDA_CLOUD }}
         run: |
           source ~/miniconda/etc/profile.d/conda.sh
           conda activate package_name
-          conda build .
+          if [[ ${UPLOAD_TO_ANACONDA_CLOUD} == true ]]; then
+            conda build . --user ${ANACONDA_USER} --token ${ANACONDA_TOKEN} ${ANACONDA_FLAGS}
+          else
+            conda build .
+          fi
