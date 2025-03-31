@@ -55,6 +55,7 @@ jobs:
           source ~/miniconda/etc/profile.d/conda.sh
           conda activate package_name
           pixi auth login \
-            --token ${{ secrets.PREFIXDEV_TOKEN }} \
+            --token pfx-YuMpA5Jbm5o8h6X0eiZFR1DOv4f0n5GNFBrF \
             https://prefix.dev/api/v1/upload/davidrich27
-          pixi upload https://prefix.dev/api/v1/upload/davidrich27 ../conda-bld/noarch/*.conda
+          pixi upload https://prefix.dev/api/v1/upload/davidrich27 \
+            ../conda-bld/noarch/*.conda
