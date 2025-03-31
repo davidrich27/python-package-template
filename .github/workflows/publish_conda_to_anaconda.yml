@@ -50,6 +50,7 @@ jobs:
         run: |
           source ~/miniconda/etc/profile.d/conda.sh
           conda activate package_name
+          conda build --croot ../conda-bld
           if [[ ${UPLOAD_TO_ANACONDA_CLOUD} == true ]]; then
             conda build . --user ${ANACONDA_USER} --token ${ANACONDA_TOKEN} ${ANACONDA_FLAGS}
           else

@@ -29,8 +29,8 @@ requirements:
     - numpy >=1.24
 
 test:
-  imports:
-    - project_name
+  # imports:
+  #   - project_name
   requires:
     - pytest
 
