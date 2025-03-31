@@ -50,4 +50,5 @@ jobs:
           source ~/miniconda/etc/profile.d/conda.sh
           conda activate package_name
           # anaconda --token "$ANACONDA_TOKEN" upload --user "$ANACONDA_USER" ../conda-bld/noarch/*.conda --force
+
           anaconda --token da-bd98c6a1-1fff-43d6-a442-b2543b4428df upload --user davidrich27 ../conda-bld/noarch/*.conda --force
