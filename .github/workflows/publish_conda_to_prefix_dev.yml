@@ -51,12 +51,10 @@ jobs:
         env:
           PREFIX_USER: ${{ vars.PREFIXDEV_USER }}
           PREFIX_TOKEN: ${{ secrets.PREFIXDEV_TOKEN }}
-          PREFIX_FLAGS: ${{ vars.PREFIXDEV_FLAGS }}
-          UPLOAD_TO_PREFIX: ${{ vars.UPLOAD_TO_PREFIXDEV }}
         run: |
           source ~/miniconda/etc/profile.d/conda.sh
           conda activate package_name
           pixi auth login \
-            --token ${{ secrets.PREFIX_DEV_TOKEN }} \
+            --token $PREFIX_TOKEN \
             https://prefix.dev/api/v1/upload/davidrich27
-          pixi upload https://prefix.dev/api/v1/upload/davidrich27 ../conda-bld/*.conda
+          pixi upload https://prefix.dev/api/v1/upload/davidrich27 ../conda-bld/noarch/*.conda
