@@ -1,4 +1,4 @@
-name: Build/Install via conda
+name: Publish conda to Anaconda Cloud
 
 on:
   push:
