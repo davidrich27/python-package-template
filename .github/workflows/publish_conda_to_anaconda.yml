@@ -1,4 +1,4 @@
-name: Publish conda to Anaconda Cloud
+name: Publish conda package to Anaconda Cloud
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
           conda activate package_name
           conda install -c conda-forge conda-build anaconda-client
 
-      - name: Build package (and Upload to Anaconda Cloud)
+      - name: Build package
         env:
           ANACONDA_USER: ${{ vars.ANACONDA_USER }}
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
@@ -50,9 +50,14 @@ jobs:
         run: |
           source ~/miniconda/etc/profile.d/conda.sh
           conda activate package_name
-          conda build --croot ../conda-bld
-          if [[ ${UPLOAD_TO_ANACONDA_CLOUD} == true ]]; then
-            conda build . --user ${ANACONDA_USER} --token ${ANACONDA_TOKEN} ${ANACONDA_FLAGS}
-          else
-            conda build .
-          fi
+          conda build --croot ../conda-bld .
+
+      - name: Upload package to Anaconda Cloud
+        env:
+          ANACONDA_USER: ${{ vars.ANACONDA_USER }}
+          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+        run: |
+          source ~/miniconda/etc/profile.d/conda.sh
+          conda activate package_name
+          anaconda login --token $ANACONDA_TOKEN
+          anaconda upload --user $ANACONDA_USER ../conda-bld/noarch/*.conda --force

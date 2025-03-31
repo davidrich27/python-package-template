@@ -12,10 +12,7 @@ build:
   number: 0
   noarch: python
   script:
-    - "echo INSTALL PACKAGE"
     - "{{ PYTHON }} -m pip install ."
-    - "echo LIST PACKAGES"
-    - "{{ PYTHON }} -m pip list"
 
 requirements:
   host:

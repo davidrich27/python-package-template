@@ -1,8 +1,10 @@
-name: Publish Conda to prefix.dev
+name: Publish conda package to prefix.dev
 
 on:
   push:
     branches: [ main ]
+    tags:
+        - 'v*'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -35,13 +37,17 @@ jobs:
         run: |
           source ~/miniconda/etc/profile.d/conda.sh
           conda config --prepend channels conda-forge
-          conda config --prepend channels bioconda
-          conda config --show channels
           conda env create -f environment-dev.yml
           conda activate package_name
-          conda install -c conda-forge conda-build anaconda-client
+          conda install -c conda-forge conda-build pixi
 
-      - name: Build package and upload to prefix.dev
+      - name: Build package
+        run: |
+          source ~/miniconda/etc/profile.d/conda.sh
+          conda activate package_name
+          conda build --croot ../conda-bld .
+
+      - name: Upload to Pixi
         env:
           PREFIX_USER: ${{ vars.PREFIXDEV_USER }}
           PREFIX_TOKEN: ${{ secrets.PREFIXDEV_TOKEN }}
@@ -50,8 +56,7 @@ jobs:
         run: |
           source ~/miniconda/etc/profile.d/conda.sh
           conda activate package_name
-          if [[ ${UPLOAD_TO_ANACONDA_CLOUD} == true ]]; then
-            conda build . --user ${ANACONDA_USER} --token ${ANACONDA_TOKEN} ${ANACONDA_FLAGS}
-          else
-            conda build .
-          fi
+          pixi auth login \
+            --token ${{ secrets.PREFIX_DEV_TOKEN }} \
+            https://prefix.dev/api/v1/upload/davidrich27
+          pixi upload https://prefix.dev/api/v1/upload/davidrich27 ../conda-bld/*.conda
