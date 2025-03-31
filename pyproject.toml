@@ -1,0 +1,56 @@
+# Project Metadata
+[project]
+name = "package_name"
+version = "0.1.0"
+description = "A brief description of your package"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+license = { file = "LICENSE" }
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.8"
+dependencies = ["numpy>=1.23", "requests>=2.28"]
+
+# Optional development dependencies
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "black", "mypy", "flake8"]
+
+# Build Configuration using setuptools
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# Setuptools-specific Configuration
+[tool.setuptools]
+packages = ["package_name"]
+
+# [tool.setuptools.package-data]
+# "your_package_name" = ["data/*.csv"] # Example for including data files
+
+# pytest Configuration
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
+markers = [
+  "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "integration: marks integration tests",
+]
+filterwarnings = ["error", "ignore::DeprecationWarning"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+norecursedirs = [".git", ".tox", "venv", "dist", "build"]
+
+# # Black Code Formatter Configuration
+# [tool.black]
+# line-length = 88
+# target-version = ['py38', 'py39', 'py310', 'py311']
+
+# # Mypy Type Checker Configuration
+# [tool.mypy]
+# strict = true
+# ignore_missing_imports = true
+
+# # Flake8 Linter Configuration
+# [tool.flake8]
+# max-line-length = 88
+# exclude = [".git", "__pycache__", "build", "dist"]

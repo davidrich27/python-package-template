@@ -1,0 +1,35 @@
+{% set name = "project_name" %}
+{% set version = "0.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  path: ..
+
+build:
+  number: 0
+  noarch: python
+  script:
+    - "{{ PYTHON }} -m pip install ."
+
+requirements:
+  host:
+    - python >=3.8
+    - numpy >=1.24
+    - pip
+    - setuptools
+    - wheel
+  run:
+    - python >=3.8
+    - numpy >=1.24
+
+test:
+  requires:
+    - pytest
+
+about:
+  home: https://github.com/matsengrp/project_name
+  license: MIT
+  license_file: LICENSE

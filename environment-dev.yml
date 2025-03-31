@@ -1,0 +1,8 @@
+name: package_name
+channels:
+  - conda-forge
+dependencies:
+  - setuptools
+  - wheel
+
+  - pytest
