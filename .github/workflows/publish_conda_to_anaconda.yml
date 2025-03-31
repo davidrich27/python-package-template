@@ -42,11 +42,6 @@ jobs:
           conda install -c conda-forge conda-build anaconda-client
 
       - name: Build package
-        env:
-          ANACONDA_USER: ${{ vars.ANACONDA_USER }}
-          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
-          ANACONDA_FLAGS: ${{ vars.ANACONDA_FLAGS }}
-          UPLOAD_TO_ANACONDA_CLOUD: ${{ vars.UPLOAD_TO_ANACONDA_CLOUD }}
         run: |
           source ~/miniconda/etc/profile.d/conda.sh
           conda activate package_name
@@ -59,5 +54,5 @@ jobs:
         run: |
           source ~/miniconda/etc/profile.d/conda.sh
           conda activate package_name
-          anaconda --token da-bd98c6a1-1fff-43d6-a442-b2543b4428df \
-            upload --user davidrich27 ../conda-bld/noarch/*.conda --force
+          anaconda --token ${{ secrets.ANACONDA_TOKEN }} \
+            upload --user ${{ vars.ANACONDA_USER }} ../conda-bld/noarch/*.conda --force
